@@ -20,7 +20,7 @@ class MoviesApp : Application() {
 
         startKoin {
             androidContext(this@MoviesApp)
-            modules(mainModule, popularMoviesModule, upcomingMoviesModule, favoriteMoviesModule, movieDetailsModule)
+            modules(mainModule, popularMoviesModule, upcomingMoviesModule, favoriteMoviesModule, movieDetailsModule, registerMoviesModule, signUpMoviesModule)
         }
 
         setupTimberLog()

@@ -22,9 +22,6 @@ import com.marcoscg.movies.ui.sign_in.SignInFragment
 class AccountFragment : Fragment(R.layout.fragment_account) {
     private var _binding: FragmentAccountBinding? = null
     private val binding get() = _binding!!
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     private fun initAction() {
         binding.buttonNavLogin.setOnClickListener {
@@ -37,7 +34,7 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentAccountBinding.inflate(inflater, container, false)
         return binding.root
     }

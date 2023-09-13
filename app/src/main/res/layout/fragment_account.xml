@@ -9,6 +9,7 @@
     android:background="@color/background_color">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/containedProfile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
@@ -103,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="32dp"
             android:src="@drawable/log_in"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

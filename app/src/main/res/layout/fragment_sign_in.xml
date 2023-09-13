@@ -14,7 +14,7 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="100dp"
         android:scaleType="centerCrop"
         android:shadowColor="@color/shade_secondary_color"
         android:src="@drawable/login_movie"
@@ -35,24 +35,23 @@
 
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/user_name"
+        android:id="@+id/text_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/spacing_medium"
         android:layout_marginTop="@dimen/spacing_medium"
-        android:hint="@string/username"
+        android:hint="Email"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        app:startIconDrawable="@drawable/ic_profile">
+        app:startIconDrawable="@drawable/ic_email">
 
         <com.google.android.material.textfield.TextInputEditText
             android:layout_width="match_parent"
             android:layout_height="56dp"
-            android:inputType="textPersonName"
+            android:inputType="textEmailAddress"
             android:maxLines="1"
             android:textColor="@color/shade_secondary_color"
             />
     </com.google.android.material.textfield.TextInputLayout>
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/password"
         android:layout_width="match_parent"
@@ -60,7 +59,7 @@
         android:layout_marginHorizontal="@dimen/spacing_medium"
         android:layout_marginTop="@dimen/spacing_medium"
         android:hint="@string/password"
-        app:layout_constraintTop_toBottomOf="@+id/user_name"
+        app:layout_constraintTop_toBottomOf="@+id/text_email"
         app:passwordToggleEnabled="true"
         app:passwordToggleTint="@color/shade_secondary_color"
         app:startIconDrawable="@drawable/ic_key">
@@ -90,6 +89,7 @@
 
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/spacing_extra_large"
@@ -108,8 +108,9 @@
         android:layout_marginBottom="16dp"
         android:text="@string/don_t_have_an_account"
         android:textAppearance="@style/Regular.Medium.Primary"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/containedButton"
         app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp"
         app:layout_constraintHorizontal_bias="0.42"
         app:layout_constraintStart_toStartOf="parent" />
 

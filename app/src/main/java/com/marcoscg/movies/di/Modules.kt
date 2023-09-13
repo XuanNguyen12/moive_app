@@ -12,6 +12,8 @@ import com.marcoscg.movies.ui.home.master.MovieListAdapter
 import com.marcoscg.movies.ui.home.viewmodel.FavoriteViewModel
 import com.marcoscg.movies.ui.home.viewmodel.PopularViewModel
 import com.marcoscg.movies.ui.home.viewmodel.UpcomingViewModel
+import com.marcoscg.movies.ui.sign_in.viewmodel.LoginViewModel
+import com.marcoscg.movies.ui.sign_in.viewmodel.SignUpViewModel
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
@@ -37,6 +39,14 @@ val upcomingMoviesModule = module {
 val favoriteMoviesModule = module {
     factory { GetFavoriteMoviesUseCase(get()) }
     viewModel { FavoriteViewModel(get()) }
+}
+val registerMoviesModule = module {
+    factory { UserRegisterUseCase(get()) }
+    viewModel { SignUpViewModel(get()) }
+}
+val signUpMoviesModule = module {
+    factory { UserLoginUseCase(get()) }
+    viewModel { LoginViewModel(get()) }
 }
 
 val movieDetailsModule = module {

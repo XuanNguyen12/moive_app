@@ -27,14 +27,19 @@
             android:id="@+id/navigateToSignUp"
             app:destination="@id/nav_sign_up"/>
 
+        <action
+            android:id="@+id/successToSignUp"
+            app:destination="@id/nav_account"/>
+
     </fragment>
     <fragment
         android:id="@+id/nav_sign_up"
         android:name="com.marcoscg.movies.ui.sign_in.SignUpFragment"
         tools:layout="@layout/fragment_sign_up">
 
-
-
+        <action
+            android:id="@+id/successToSignIn"
+            app:destination="@id/nav_sign_in"/>
     </fragment>
 
 
