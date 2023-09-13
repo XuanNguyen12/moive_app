@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_account"
+    app:startDestination="@id/nav_account"
+    tools:ignore="UnusedNavigation">
+
+    <fragment
+        android:id="@+id/nav_account"
+        android:name="com.marcoscg.movies.ui.home.AccountFragment"
+        android:label="@string/account_movies"
+        tools:layout="@layout/fragment_account">
+
+        <action
+            android:id="@+id/navigateToSignIn"
+            app:destination="@id/nav_sign_in"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_sign_in"
+        android:name="com.marcoscg.movies.ui.sign_in.SignInFragment"
+        tools:layout="@layout/fragment_sign_in">
+
+        <action
+            android:id="@+id/navigateToSignUp"
+            app:destination="@id/nav_sign_up"/>
+
+    </fragment>
+    <fragment
+        android:id="@+id/nav_sign_up"
+        android:name="com.marcoscg.movies.ui.sign_in.SignUpFragment"
+        tools:layout="@layout/fragment_sign_up">
+
+
+
+    </fragment>
+
+
+    <activity
+        android:id="@+id/nav_movie_detail"
+        android:name="com.marcoscg.movies.ui.details.MovieDetailsActivity">
+
+        <argument
+            android:name="id"
+            app:argType="integer" />
+
+        <argument
+            android:name="poster_path"
+            app:argType="string"/>
+
+    </activity>
+
+
+</navigation>

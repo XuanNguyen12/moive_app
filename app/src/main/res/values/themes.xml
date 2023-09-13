@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <style name="SemiBold">
+        <item name="android:textColor">@color/shade_primary_color</item>
+    </style>
+
+    <style name="SemiBold.Large">
+        <item name="android:textSize">@dimen/text_large</item>
+    </style>
+
+    <style name="SemiBold.Medium">
+        <item name="android:textSize">@dimen/text_medium</item>
+    </style>
+
+    <style name="SemiBold.Small">
+        <item name="android:textSize">@dimen/text_small</item>
+    </style>
+
+
+    <style name="Regular">
+    </style>
+
+    <style name="Regular.Medium">
+        <item name="android:textSize">@dimen/text_medium</item>
+    </style>
+
+    <style name="Regular.Medium.Primary">
+        <item name="android:textColor">@color/shade_primary_color</item>
+    </style>
+
+    <style name="Regular.Medium.Secondary">
+        <item name="android:textColor">@color/shade_secondary_color</item>
+    </style>
+
+
+    <style name="Regular.Small">
+        <item name="android:textSize">@dimen/text_small</item>
+        <item name="android:textColor">@color/shade_primary_color</item>
+    </style>
+
+    <style name="Regular.Small.Secondary">
+        <item name="android:textColor">@color/shade_secondary_color</item>
+    </style>
+
+    <style name="Regular.Small.ternary">
+        <item name="android:textColor">@color/shade_ternary_color</item>
+    </style>
+    <style name="CircleImage">
+        <item name="cornerSize">50%</item>
+    </style>
+</resources>
