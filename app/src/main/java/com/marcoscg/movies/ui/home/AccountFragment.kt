@@ -7,12 +7,25 @@ import android.view.ViewGroup
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.ActivityNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.marcoscg.movies.R
+import com.marcoscg.movies.common.utils.gone
+import com.marcoscg.movies.common.utils.setAnchorId
+import com.marcoscg.movies.common.utils.visible
+import com.marcoscg.movies.data.Resource
 import com.marcoscg.movies.databinding.FragmentAccountBinding
 import com.marcoscg.movies.databinding.FragmentMovieListBinding
+import com.marcoscg.movies.model.DataUserResponse
+import com.marcoscg.movies.model.RegisterStatus
+import com.marcoscg.movies.ui.home.viewmodel.ProfileViewModel
 import com.marcoscg.movies.ui.sign_in.SignInFragment
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import timber.log.Timber
 
 /**
  * A simple [Fragment] subclass.
@@ -20,6 +33,7 @@ import com.marcoscg.movies.ui.sign_in.SignInFragment
  * create an instance of this fragment.
  */
 class AccountFragment : Fragment(R.layout.fragment_account) {
+    private val profileViewModel: ProfileViewModel by sharedViewModel()
     private var _binding: FragmentAccountBinding? = null
     private val binding get() = _binding!!
 
@@ -42,6 +56,49 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initAction()
+        initData()
+    }
+
+    private fun initData() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            profileViewModel.profileState.collect {
+                handleDataState(it)
+            }
+        }
+    }
+
+    private fun handleDataState(state: Resource<DataUserResponse>) {
+        when (state.status) {
+            Resource.Status.LOADING -> {
+
+            }
+
+            Resource.Status.SUCCESS -> {
+                setDataUser(state.data)
+                binding.containedProfile.visible()
+                binding.layoutLogin.gone()
+            }
+
+            Resource.Status.ERROR -> {
+                binding.containedProfile.gone()
+                binding.layoutLogin.visible()
+            }
+
+            Resource.Status.EMPTY -> {
+                Timber.d("Empty state.")
+            }
+        }
+    }
+
+    private fun setDataUser(data: DataUserResponse?) {
+        binding.textNameActor.text = data?.username
+        binding.textUsername.text = data?.email
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        profileViewModel.getData()
+
     }
 
     companion object {

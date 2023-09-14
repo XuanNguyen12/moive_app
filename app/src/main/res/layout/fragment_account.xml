@@ -12,7 +12,7 @@
         android:id="@+id/containedProfile"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/image_actor"
@@ -24,6 +24,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/poster_placeholder"
             app:shapeAppearanceOverlay="@style/CircleImage" />
 
         <com.google.android.material.textview.MaterialTextView
@@ -58,6 +59,7 @@
             android:layout_marginTop="@dimen/spacing_extra_large"
             android:drawablePadding="@dimen/spacing_medium"
             android:paddingVertical="@dimen/spacing_medium"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_username" />
@@ -69,6 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/spacing_medium"
             android:drawablePadding="@dimen/spacing_medium"
+            android:visibility="gone"
             android:paddingVertical="@dimen/spacing_medium"
             android:text="@string/rated_movies"
             app:layout_constraintEnd_toEndOf="parent"
@@ -86,6 +89,7 @@
             android:drawablePadding="@dimen/spacing_medium"
             android:paddingVertical="@dimen/spacing_medium"
             android:text="@string/sign_out"
+            android:layout_marginTop="50dp"
             android:textColor="@color/shade_ternary_color"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -96,7 +100,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layout_login"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/vector_image"

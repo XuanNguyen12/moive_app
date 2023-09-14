@@ -72,7 +72,8 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                     binding.progress.gone()
                     binding.containedButton.visible()
                     Snackbar.make(binding.containedButton, "error: " + it.message, Snackbar.LENGTH_LONG)
-                        .setAnchorId(R.id.bottom_navigation).show()                }
+                        .setAnchorId(R.id.bottom_navigation).show()
+                }
             }
         }
     }
@@ -93,9 +94,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
             Resource.Status.SUCCESS -> {
                 Snackbar.make(binding.containedButton, "Success", Snackbar.LENGTH_LONG)
                     .setAnchorId(R.id.bottom_navigation).show()
-
-                val action = SignInFragmentDirections.successToSignUp()
-                findNavController().navigate(action)
+                findNavController().popBackStack()
             }
             Resource.Status.ERROR -> {
                 binding.progress.invisible()

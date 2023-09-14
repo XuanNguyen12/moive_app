@@ -92,8 +92,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
             Resource.Status.SUCCESS -> {
                 Snackbar.make(binding.containedButton, "Success", Snackbar.LENGTH_LONG)
                     .setAnchorId(R.id.bottom_navigation).show()
-                val action = SignUpFragmentDirections.successToSignIn()
-                findNavController().navigate(action)
+                findNavController().popBackStack()
 
             }
             Resource.Status.ERROR -> {

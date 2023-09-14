@@ -11,6 +11,7 @@ import com.marcoscg.movies.ui.details.viewmodel.MovieDetailsViewModel
 import com.marcoscg.movies.ui.home.master.MovieListAdapter
 import com.marcoscg.movies.ui.home.viewmodel.FavoriteViewModel
 import com.marcoscg.movies.ui.home.viewmodel.PopularViewModel
+import com.marcoscg.movies.ui.home.viewmodel.ProfileViewModel
 import com.marcoscg.movies.ui.home.viewmodel.UpcomingViewModel
 import com.marcoscg.movies.ui.sign_in.viewmodel.LoginViewModel
 import com.marcoscg.movies.ui.sign_in.viewmodel.SignUpViewModel
@@ -47,6 +48,10 @@ val registerMoviesModule = module {
 val signUpMoviesModule = module {
     factory { UserLoginUseCase(get()) }
     viewModel { LoginViewModel(get()) }
+}
+val profileModule = module {
+    factory { ProfileUseCase(get()) }
+    viewModel { ProfileViewModel(get()) }
 }
 
 val movieDetailsModule = module {
