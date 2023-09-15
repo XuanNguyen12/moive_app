@@ -11,8 +11,8 @@ import java.util.concurrent.TimeUnit
 
 object ApiClient {
 
-//    private const val BASE_URL = "http://192.119.19.104:5001/api/"
-    private const val BASE_URL = "http://172.16.10.43:5001/api/"
+    private const val BASE_URL = "http://192.119.19.104:5001/api/"
+//    private const val BASE_URL = "http://172.16.10.43:5001001/api/"
 //    private const val BASE_URL = "http://172.16.190.143:5001/api/"
     const val POSTER_BASE_URL = "https://image.tmdb.org/t/p/w500"
 
@@ -23,9 +23,6 @@ object ApiClient {
         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
         .client(OkHttpClient.Builder()
             .addInterceptor(MoviesAuthInterceptor())
-            .connectTimeout(500,TimeUnit.MILLISECONDS)
-            .writeTimeout(5, TimeUnit.MINUTES) // write timeout
-            .readTimeout(500,TimeUnit.MILLISECONDS)
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
             .build())
         .build()

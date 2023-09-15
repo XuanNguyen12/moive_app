@@ -1,7 +1,9 @@
 package com.marcoscg.movies.data.sources.remote.mapper
 
 import com.marcoscg.movies.data.sources.remote.model.RemoteDataUserResponse
+import com.marcoscg.movies.data.sources.remote.model.RemoteFavouriteResponse
 import com.marcoscg.movies.data.sources.remote.model.RemoteLoginResponse
+import com.marcoscg.movies.data.sources.remote.model.RemoteMovie
 import com.marcoscg.movies.data.sources.remote.model.RemoteMovieDetail
 import com.marcoscg.movies.data.sources.remote.model.RemoteMoviesResponse
 import com.marcoscg.movies.data.sources.remote.model.RemoteRegisterResponse
@@ -85,6 +87,30 @@ class MoviesRemoteMapper {
             remoteDataUserResponse.email,
             remoteDataUserResponse.id
         )
+    }
+    fun mapFavouriteFromRemote(remoteFavouriteResponse: RemoteFavouriteResponse): FavouriteResponse {
+        return FavouriteResponse(
+            remoteFavouriteResponse.movieId
+        )
+    }
+    fun mapFavouritesFromRemote(remoteMovies: List<RemoteMovie>): List<Movie> {
+        return remoteMovies.map {
+            Movie(
+                it.popularity.orDefault(),
+                it.vote_count.orDefault(),
+                it.video.orFalse(),
+                it.poster_path.orEmpty(),
+                it.id,
+                it.adult.orFalse(),
+                it.backdrop_path.orEmpty(),
+                it.original_language.orEmpty(),
+                it.original_title.orEmpty(),
+                it.title,
+                it.vote_average.orDefault(),
+                it.overview.orEmpty(),
+                it.release_date.orEmpty()
+            )
+        }
     }
 
 }

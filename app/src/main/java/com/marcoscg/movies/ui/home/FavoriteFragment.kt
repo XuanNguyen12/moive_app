@@ -16,6 +16,7 @@ import com.marcoscg.movies.common.utils.setAnchorId
 import com.marcoscg.movies.data.Resource
 import com.marcoscg.movies.databinding.FragmentMovieListBinding
 import com.marcoscg.movies.model.Movie
+import com.marcoscg.movies.model.MoviesResponse
 import com.marcoscg.movies.ui.home.master.MovieListAdapter
 import com.marcoscg.movies.ui.home.viewmodel.FavoriteViewModel
 import kotlinx.coroutines.flow.collect

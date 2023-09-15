@@ -15,6 +15,9 @@
         <action
             android:id="@+id/navigateToSignIn"
             app:destination="@id/nav_sign_in"/>
+        <action
+            android:id="@+id/navigateToDialogLogout"
+            app:destination="@id/nav_logout"/>
 
     </fragment>
 
@@ -31,7 +34,15 @@
             android:id="@+id/successToSignUp"
             app:destination="@id/nav_account"/>
 
+
     </fragment>
+
+    <fragment
+        android:id="@+id/nav_logout"
+        android:name="com.marcoscg.movies.ui.sign_in.LogoutDialog"
+        tools:layout="@layout/dialog_logout">
+    </fragment>
+
     <fragment
         android:id="@+id/nav_sign_up"
         android:name="com.marcoscg.movies.ui.sign_in.SignUpFragment"

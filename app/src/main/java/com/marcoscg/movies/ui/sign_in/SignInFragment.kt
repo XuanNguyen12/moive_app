@@ -14,6 +14,7 @@ import com.marcoscg.movies.common.utils.gone
 import com.marcoscg.movies.common.utils.invisible
 import com.marcoscg.movies.common.utils.setAnchorId
 import com.marcoscg.movies.common.utils.visible
+import com.marcoscg.movies.data.sources.remote.CommonSharedPreferences
 import com.marcoscg.movies.data.Resource
 import com.marcoscg.movies.databinding.FragmentSignInBinding
 import com.marcoscg.movies.model.LoginResponse
@@ -24,11 +25,7 @@ import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import timber.log.Timber
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SignInFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class SignInFragment : Fragment(R.layout.fragment_sign_in) {
     private val loginViewModel: LoginViewModel by sharedViewModel()
     private var _binding: FragmentSignInBinding? = null
@@ -95,6 +92,7 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
                 Snackbar.make(binding.containedButton, "Success", Snackbar.LENGTH_LONG)
                     .setAnchorId(R.id.bottom_navigation).show()
                 findNavController().popBackStack()
+                state.data?.accessToken?.let { CommonSharedPreferences.getInstance().setTokenUser(it) }
             }
             Resource.Status.ERROR -> {
                 binding.progress.invisible()

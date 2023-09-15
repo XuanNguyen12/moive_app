@@ -34,7 +34,7 @@ class HomeActivity : BaseActivity() {
 
     private fun setupBottomNavigation() {
         val controller = binding.bottomNavigation.setupWithNavController(
-            listOf(R.navigation.navigation_popular, R.navigation.navigation_upcoming, R.navigation.navigation_favorite,R.navigation.navigation_account),
+            listOf(R.navigation.navigation_popular, R.navigation.navigation_favorite,R.navigation.navigation_account),
             supportFragmentManager,
             R.id.nav_host_container,
             intent

@@ -1,6 +1,7 @@
 package com.marcoscg.movies.data.sources.remote.auth
 
 import com.marcoscg.movies.data.BuildConfig
+import com.marcoscg.movies.data.sources.remote.CommonSharedPreferences
 import okhttp3.HttpUrl
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -13,6 +14,7 @@ class MoviesAuthInterceptor : Interceptor {
             .build()
 
         val request = chain.request().newBuilder()
+            .addHeader("Authorization", "Bearer " + CommonSharedPreferences.getInstance().getTokenUser())
             .url(url)
             .build()
 

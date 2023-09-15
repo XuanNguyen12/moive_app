@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.marcoscg.movies.data.Resource
 import com.marcoscg.movies.domain.interactor.GetFavoriteMoviesUseCase
 import com.marcoscg.movies.model.Movie
+import com.marcoscg.movies.model.MoviesResponse
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers

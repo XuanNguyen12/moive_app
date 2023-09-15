@@ -6,14 +6,15 @@ import com.marcoscg.movies.data.sources.remote.model.RemoteUserLogin
 import com.marcoscg.movies.data.sources.remote.model.RemoteUserRegister
 import com.marcoscg.movies.domain.repository.MoviesRemoteRepository
 import com.marcoscg.movies.model.DataUserResponse
+import com.marcoscg.movies.model.FavouriteResponse
 import com.marcoscg.movies.model.LoginResponse
+import com.marcoscg.movies.model.Movie
 import com.marcoscg.movies.model.MovieDetail
 import com.marcoscg.movies.model.MoviesResponse
 import com.marcoscg.movies.model.RegisterStatus
 import com.marcoscg.movies.model.UserLogin
 import com.marcoscg.movies.model.UserRegister
 import io.reactivex.Single
-import retrofit2.Response
 
 class MoviesRemoteRepositoryImpl(private val moviesRemoteMapper: MoviesRemoteMapper) :
     MoviesRemoteRepository {
@@ -56,10 +57,23 @@ class MoviesRemoteRepositoryImpl(private val moviesRemoteMapper: MoviesRemoteMap
             }
     }
 
-    override fun getDataUser(token: String): Single<DataUserResponse> {
+    override fun getDataUser(): Single<DataUserResponse> {
         return ApiClient.movieService()
-            .getDataUser(token).map {
+            .getDataUser().map {
                 moviesRemoteMapper.mapDataUserFromRemote(it)
             }
+    }
+
+    override fun setFavourite(id: String): Single<FavouriteResponse> {
+        return ApiClient.movieService()
+            .setFavourite(id).map {
+                moviesRemoteMapper.mapFavouriteFromRemote(it)
+            }
+    }
+
+    override fun getFavourite(): Single<List<Movie>> {
+        return ApiClient.movieService().getFavourite().map {
+            moviesRemoteMapper.mapFavouritesFromRemote(it)
+        }
     }
 }

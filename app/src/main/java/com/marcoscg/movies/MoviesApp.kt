@@ -5,7 +5,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDex
 import com.jakewharton.threetenabp.AndroidThreeTen
-import com.marcoscg.movies.data.CommonSharedPreferences
+import com.marcoscg.movies.data.sources.remote.CommonSharedPreferences
 import com.marcoscg.movies.di.*
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin

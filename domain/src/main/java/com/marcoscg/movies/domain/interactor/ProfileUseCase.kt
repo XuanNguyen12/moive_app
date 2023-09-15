@@ -7,7 +7,7 @@ import com.marcoscg.movies.model.UserLogin
 import io.reactivex.Single
 
 class ProfileUseCase (private val moviesRemoteRepository: MoviesRemoteRepository) {
-    fun execute(token: String) : Single<DataUserResponse> {
-        return moviesRemoteRepository.getDataUser(token)
+    fun execute() : Single<DataUserResponse> {
+        return moviesRemoteRepository.getDataUser()
     }
 }

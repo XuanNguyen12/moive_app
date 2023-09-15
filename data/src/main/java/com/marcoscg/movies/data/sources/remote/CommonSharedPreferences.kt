@@ -4,9 +4,8 @@
  * Last modified 2/3/23, 8:54 AM
  */
 
-package com.marcoscg.movies.data
+package com.marcoscg.movies.data.sources.remote
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 
@@ -90,12 +89,11 @@ class CommonSharedPreferences {
         putString("user_token", token)
     }
 
+    fun getTokenUser(): String = getString("user_token", "")
+
     fun removeToken() {
         putString("user_token", "")
     }
 
-    fun getTokenUser(token: String) {
-        getString("user_token", "")
-    }
 
 }

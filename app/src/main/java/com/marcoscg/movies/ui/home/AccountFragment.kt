@@ -1,6 +1,7 @@
 package com.marcoscg.movies.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +22,7 @@ import com.marcoscg.movies.databinding.FragmentMovieListBinding
 import com.marcoscg.movies.model.DataUserResponse
 import com.marcoscg.movies.model.RegisterStatus
 import com.marcoscg.movies.ui.home.viewmodel.ProfileViewModel
+import com.marcoscg.movies.ui.sign_in.LogoutDialog
 import com.marcoscg.movies.ui.sign_in.SignInFragment
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -41,6 +43,11 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
         binding.buttonNavLogin.setOnClickListener {
             val action = AccountFragmentDirections.navigateToSignIn()
             findNavController().navigate(action)
+        }
+        binding.textSignOut.setOnClickListener {
+            activity?.supportFragmentManager?.let { it1 -> LogoutDialog.newInstance {
+                profileViewModel.getData()
+            }.show(it1, " dialog") }
         }
     }
 
@@ -65,6 +72,8 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
                 handleDataState(it)
             }
         }
+        Log.d("XuanNV", "initData: ")
+        profileViewModel.getData()
     }
 
     private fun handleDataState(state: Resource<DataUserResponse>) {
@@ -72,14 +81,15 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
             Resource.Status.LOADING -> {
 
             }
-
             Resource.Status.SUCCESS -> {
+                Log.d("XuanNV", "SUCCESS: ")
                 setDataUser(state.data)
                 binding.containedProfile.visible()
                 binding.layoutLogin.gone()
             }
 
             Resource.Status.ERROR -> {
+                Log.d("XuanNV", "ERROR: ")
                 binding.containedProfile.gone()
                 binding.layoutLogin.visible()
             }
@@ -97,7 +107,6 @@ class AccountFragment : Fragment(R.layout.fragment_account) {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        profileViewModel.getData()
 
     }
 

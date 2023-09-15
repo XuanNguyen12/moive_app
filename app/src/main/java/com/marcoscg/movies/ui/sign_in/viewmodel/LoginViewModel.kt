@@ -30,6 +30,7 @@ class LoginViewModel (private val userLoginUseCase: UserLoginUseCase) : ViewMode
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ res ->
                 stateFlow.value = Resource.success(res)
+                stateFlow.value = Resource.empty()
             }, { throwable ->
                 throwable.localizedMessage?.let {
                     stateFlow.value = Resource.error(it)

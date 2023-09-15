@@ -43,10 +43,10 @@ class MovieDetailsViewModel(private val getSingleMovieUseCase: GetSingleMovieUse
             })
     }
 
-    fun addFavoriteMovie(movie: MovieDetail) {
+    fun addFavoriteMovie(movieId: String) {
         favoritesStateFlow.value = Resource.loading()
 
-        disposable = addFavoriteMovieUseCase.execute(movie.toSimple())
+        disposable = addFavoriteMovieUseCase.execute(movieId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
@@ -99,7 +99,7 @@ class MovieDetailsViewModel(private val getSingleMovieUseCase: GetSingleMovieUse
                 deleteFavoriteMovie(movie)
             }, {
                 // favorite movie does not exist, add to favorites
-                addFavoriteMovie(movie)
+                addFavoriteMovie(movie.id.toString())
             })
     }
 

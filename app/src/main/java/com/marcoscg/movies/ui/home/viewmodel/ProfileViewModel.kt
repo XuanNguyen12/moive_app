@@ -1,12 +1,11 @@
 package com.marcoscg.movies.ui.home.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.marcoscg.movies.data.sources.remote.CommonSharedPreferences
 import com.marcoscg.movies.data.Resource
 import com.marcoscg.movies.domain.interactor.ProfileUseCase
-import com.marcoscg.movies.domain.interactor.UserRegisterUseCase
 import com.marcoscg.movies.model.DataUserResponse
-import com.marcoscg.movies.model.RegisterStatus
-import com.marcoscg.movies.model.UserRegister
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -22,8 +21,12 @@ class ProfileViewModel(private val profileUseCase: ProfileUseCase) : ViewModel()
         get() = stateFlow
 
     fun getData() {
+        if (CommonSharedPreferences.getInstance().getTokenUser().isBlank()) {
+            stateFlow.value = Resource.error("")
+            return
+        }
         stateFlow.value = Resource.loading()
-        disposable = profileUseCase.execute("")
+        disposable = profileUseCase.execute()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ res ->
