@@ -7,6 +7,9 @@ import com.marcoscg.movies.data.sources.remote.mapper.MoviesRemoteMapper
 import com.marcoscg.movies.domain.interactor.*
 import com.marcoscg.movies.domain.repository.MoviesLocalRepository
 import com.marcoscg.movies.domain.repository.MoviesRemoteRepository
+import com.marcoscg.movies.ui.comment.CommentViewModel
+import com.marcoscg.movies.ui.details.viewmodel.CommentListAdapter
+import com.marcoscg.movies.ui.search.SearchViewModel
 import com.marcoscg.movies.ui.details.viewmodel.MovieDetailsViewModel
 import com.marcoscg.movies.ui.home.master.MovieListAdapter
 import com.marcoscg.movies.ui.home.viewmodel.FavoriteViewModel
@@ -25,6 +28,7 @@ val mainModule = module {
     factory<MoviesRemoteRepository> { MoviesRemoteRepositoryImpl(get()) }
     factory<MoviesLocalRepository> { MoviesLocalRepositoryImpl(androidContext(), get()) }
     factory { MovieListAdapter(androidContext()) }
+    factory { CommentListAdapter(androidContext()) }
 }
 
 val popularMoviesModule = module {
@@ -53,12 +57,22 @@ val profileModule = module {
     factory { ProfileUseCase(get()) }
     viewModel { ProfileViewModel(get()) }
 }
+val searchModule = module {
+    factory { SearchMovieUseCase(get()) }
+    viewModel { SearchViewModel(get()) }
+}
+val getCommentModule = module {
+    factory { GetCommentMovieUseCase(get()) }
+    factory { PostCommentMovieUseCase(get()) }
+    viewModel { CommentViewModel(get(), get()) }
+}
 
 val movieDetailsModule = module {
     factory { GetSingleMovieUseCase(get()) }
     factory { AddFavoriteMovieUseCase(get()) }
     factory { DeleteFavoriteMovieUseCase(get()) }
     factory { UpdateFavoriteMovieUseCase(get()) }
-    factory { GetFavoriteMovieUseCase(get()) }
-    viewModel { MovieDetailsViewModel(get(), get(), get(), get(), get()) }
+    factory { CheckFavoriteMovieUseCase(get()) }
+    factory { GetCommentMovieUseCase(get()) }
+    viewModel { MovieDetailsViewModel(get(), get(), get(), get(), get(), get()) }
 }

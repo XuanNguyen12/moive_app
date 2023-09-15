@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.util.Pair
 import androidx.fragment.app.Fragment
@@ -12,7 +13,9 @@ import androidx.navigation.ActivityNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.marcoscg.movies.R
+import com.marcoscg.movies.common.utils.gone
 import com.marcoscg.movies.common.utils.setAnchorId
+import com.marcoscg.movies.common.utils.visible
 import com.marcoscg.movies.data.Resource
 import com.marcoscg.movies.databinding.FragmentMovieListBinding
 import com.marcoscg.movies.model.Movie
@@ -48,7 +51,6 @@ class FavoriteFragment : Fragment(R.layout.fragment_movie_list), MovieListAdapte
         setupRecyclerView()
         setupSwipeRefresh()
 
-        favoriteViewModel.fetchFavoriteMovies()
 
         viewLifecycleOwner.lifecycleScope.launch {
             favoriteViewModel.favoriteMoviesState.collect {
@@ -77,15 +79,26 @@ class FavoriteFragment : Fragment(R.layout.fragment_movie_list), MovieListAdapte
         when (state.status) {
             Resource.Status.LOADING -> {
                 binding.srlFragmentMovieList.isRefreshing = true
+//                binding.layoutLogin.gone()
+//                binding.srlFragmentMovieList.visible()
             }
             Resource.Status.SUCCESS -> {
                 binding.srlFragmentMovieList.isRefreshing = false
-                loadMovies(state.data)
+                binding.layoutLogin.gone()
+                binding.srlFragmentMovieList.visible()
+                if (state.data.isNullOrEmpty()) {
+                    binding.layoutEmpty.visible()
+                    binding.rvFragmentMovieList.gone()
+                } else {
+                    binding.layoutEmpty.gone()
+                    binding.rvFragmentMovieList.visible()
+                    loadMovies(state.data)
+                }
             }
             Resource.Status.ERROR -> {
                 binding.srlFragmentMovieList.isRefreshing = false
-                Snackbar.make(binding.srlFragmentMovieList, getString(R.string.error_message_pattern, state.message), Snackbar.LENGTH_LONG)
-                    .setAnchorId(R.id.bottom_navigation).show()
+                binding.layoutLogin.visible()
+                binding.rvFragmentMovieList.gone()
             }
             Resource.Status.EMPTY -> {
                 Timber.d("Empty state.")
@@ -100,6 +113,10 @@ class FavoriteFragment : Fragment(R.layout.fragment_movie_list), MovieListAdapte
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        favoriteViewModel.fetchFavoriteMovies()
+    }
     private fun setupRecyclerView() {
         movieListAdapter.setOnMovieClickListener(this)
 

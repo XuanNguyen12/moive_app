@@ -1,6 +1,6 @@
 package com.marcoscg.movies.model
 
 data class RegisterStatus(
-    var title: String? = null,
-    var message: String? = null
+    var id    : String? = null,
+     var email : String? = null
 )

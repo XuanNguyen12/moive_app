@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcvComment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/edt_post_comment"
+        android:layout_below="@+id/toolbar"/>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edt_post_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/spacing_medium"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="12dp"
+        android:textColorHint="#404040"
+        android:hint="Review">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:imeOptions="actionDone"
+            android:textColor="@color/shade_secondary_color"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+</RelativeLayout>
+

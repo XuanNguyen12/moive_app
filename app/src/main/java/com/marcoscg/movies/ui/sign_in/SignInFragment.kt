@@ -1,6 +1,8 @@
 package com.marcoscg.movies.ui.sign_in
 
 import android.os.Bundle
+import android.text.TextUtils
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,8 +16,8 @@ import com.marcoscg.movies.common.utils.gone
 import com.marcoscg.movies.common.utils.invisible
 import com.marcoscg.movies.common.utils.setAnchorId
 import com.marcoscg.movies.common.utils.visible
-import com.marcoscg.movies.data.sources.remote.CommonSharedPreferences
 import com.marcoscg.movies.data.Resource
+import com.marcoscg.movies.data.sources.remote.CommonSharedPreferences
 import com.marcoscg.movies.databinding.FragmentSignInBinding
 import com.marcoscg.movies.model.LoginResponse
 import com.marcoscg.movies.model.UserLogin
@@ -107,18 +109,31 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
     }
     private fun checkDataRegister(): Boolean {
         if (binding.textEmail.editText?.text?.toString()?.isBlank() == true) {
-            Toast.makeText(activity, "Please enter email", Toast.LENGTH_SHORT).show()
+            Snackbar.make(binding.containedButton, "Please enter email", Snackbar.LENGTH_LONG)
+                .setAnchorId(R.id.bottom_navigation).show()
+            return false
+        }
+        if (!isValidEmail(binding.textEmail.editText?.text?.toString())) {
+            Snackbar.make(binding.containedButton, "Please enter valid email ", Snackbar.LENGTH_LONG)
+                .setAnchorId(R.id.bottom_navigation).show()
             return false
         }
 
         if (binding.password.editText?.text?.toString()?.isBlank() == true) {
-            Toast.makeText(activity, "Please enter password", Toast.LENGTH_SHORT).show()
+            Snackbar.make(binding.containedButton, "Please enter password", Snackbar.LENGTH_LONG)
+                .setAnchorId(R.id.bottom_navigation).show()
             return false
 
         }
         return true
     }
-
+    fun isValidEmail(target: CharSequence?): Boolean {
+        return if (TextUtils.isEmpty(target)) {
+            false
+        } else {
+            Patterns.EMAIL_ADDRESS.matcher(target).matches()
+        }
+    }
     override fun onDestroy() {
         super.onDestroy()
         loginViewModel.disposable?.dispose()

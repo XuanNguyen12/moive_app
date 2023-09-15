@@ -1,5 +1,6 @@
 package com.marcoscg.movies.ui.details
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.method.LinkMovementMethod
 import android.widget.Toast
@@ -7,7 +8,9 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.text.HtmlCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.ActivityNavigator
+import androidx.navigation.findNavController
 import androidx.navigation.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.chip.Chip
 import com.marcoscg.movies.R
 import com.marcoscg.movies.base.BaseActivity
@@ -18,10 +21,15 @@ import com.marcoscg.movies.data.Resource
 import com.marcoscg.movies.data.sources.remote.api.ApiClient
 import com.marcoscg.movies.databinding.ActivityMovieDetailsBinding
 import com.marcoscg.movies.model.Genres
+import com.marcoscg.movies.model.GetCommentResponse
+import com.marcoscg.movies.model.Movie
 import com.marcoscg.movies.model.MovieDetail
+import com.marcoscg.movies.ui.details.viewmodel.CommentListAdapter
 import com.marcoscg.movies.ui.details.viewmodel.MovieDetailsViewModel
+import com.marcoscg.movies.ui.home.master.MovieListAdapter
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
@@ -36,12 +44,14 @@ class MovieDetailsActivity : BaseActivity() {
 
     private lateinit var binding: ActivityMovieDetailsBinding
     private val args: MovieDetailsActivityArgs by navArgs()
+    private val commentListAdapter: CommentListAdapter by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMovieDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
+        binding.rcvComment.layoutManager = LinearLayoutManager(this)
+        binding.rcvComment.adapter = commentListAdapter
         setupToolbar()
         clearStatusBar()
 
@@ -58,6 +68,11 @@ class MovieDetailsActivity : BaseActivity() {
         lifecycleScope.launch {
             movieDetailsViewModel.favoritesState.collect {
                 handleFavoriteMovieDataState(it)
+            }
+        }
+        lifecycleScope.launch {
+            movieDetailsViewModel.commentMoviesState.collect {
+                handleCommentMovieDataState(it)
             }
         }
     }
@@ -96,6 +111,29 @@ class MovieDetailsActivity : BaseActivity() {
                 updateFavoriteButton(state.data)
             }
             Resource.Status.ERROR -> {
+                binding.favoriteFab.gone()
+            }
+            Resource.Status.EMPTY -> {
+                Timber.d("Empty state.")
+            }
+        }
+    }
+
+    private fun handleCommentMovieDataState(state: Resource<List<GetCommentResponse>>) {
+        when (state.status) {
+            Resource.Status.LOADING -> { }
+            Resource.Status.SUCCESS -> {
+                if (state.data != null) {
+                    if (state.data.size >= 3 ) {
+                        loadComment(state.data.subList(0,3))
+                    } else if (state.data.size >= 2) {
+                        loadComment(state.data.subList(0,2))
+                    } else if (state.data.isNotEmpty()) {
+                        loadComment(state.data.subList(0,1))
+                    }
+                }
+            }
+            Resource.Status.ERROR -> {
                 Toast.makeText(this, "Error: ${state.message}", Toast.LENGTH_LONG).show()
             }
             Resource.Status.EMPTY -> {
@@ -104,6 +142,11 @@ class MovieDetailsActivity : BaseActivity() {
         }
     }
 
+    private fun loadComment(comments: List<GetCommentResponse>?) {
+        comments?.let {
+            commentListAdapter.fillList(it)
+        }
+    }
     private fun loadMovieData(data: MovieDetail?) {
         data?.let {
             binding.collapsingToolbar.title = data.title
@@ -136,7 +179,12 @@ class MovieDetailsActivity : BaseActivity() {
             binding.favoriteFab.setOnClickListener {
                 movieDetailsViewModel.toggleFavorite(data)
             }
-
+            binding.containedButton.setOnClickListener {
+                val intent = Intent(this@MovieDetailsActivity, CommentFragment::class.java)
+                intent.putExtra("movieId", data.id.toString())
+                startActivity(intent)
+            }
+            movieDetailsViewModel.getCommentMovies(data.id.toString())
             movieDetailsViewModel.fetchFavoriteMovieState(data)
         }
     }

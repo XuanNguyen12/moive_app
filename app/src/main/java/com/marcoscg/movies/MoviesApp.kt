@@ -20,7 +20,18 @@ class MoviesApp : Application() {
         CommonSharedPreferences.init(this)
         startKoin {
             androidContext(this@MoviesApp)
-            modules(mainModule, popularMoviesModule, upcomingMoviesModule, favoriteMoviesModule, movieDetailsModule, registerMoviesModule, signUpMoviesModule, profileModule)
+            modules(
+                mainModule,
+                popularMoviesModule,
+                upcomingMoviesModule,
+                favoriteMoviesModule,
+                movieDetailsModule,
+                registerMoviesModule,
+                signUpMoviesModule,
+                profileModule,
+                getCommentModule,
+                searchModule
+            )
         }
         setupTimberLog()
     }

@@ -17,7 +17,7 @@ open class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setTransparentStatusBar(this)
+//        setTransparentStatusBar(this)
         applyTheme()
     }
 

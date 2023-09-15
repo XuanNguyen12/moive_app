@@ -15,7 +15,7 @@
 
     <color name="ic_launcher_background">#ffc107</color>
 
-    <color name="brand_color">#E82627</color>
+    <color name="brand_color">#005cb2</color>
     <color name="background_color">#FFFFFF</color>
 
 
@@ -29,7 +29,7 @@
     <color name="shade_quaternary_color">#2903050A</color>
 
     <color name="yellow">#FDB92C</color>
-    <color name="colorDisabled">#66E82627</color>
+    <color name="colorDisabled">#66BFBDFA</color>
 
 
     <color name="white_primary">#FFFFFF</color>

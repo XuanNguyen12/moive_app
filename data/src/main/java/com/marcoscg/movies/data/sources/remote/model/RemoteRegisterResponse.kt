@@ -4,6 +4,6 @@ import com.google.gson.annotations.SerializedName
 
 
 data class RemoteRegisterResponse (
-  @SerializedName("title"   ) var title   : String? = null,
-  @SerializedName("message" ) var message : String? = null
+  @SerializedName("_id"   ) var id    : String? = null,
+  @SerializedName("email" ) var email : String? = null
 )

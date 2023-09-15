@@ -54,6 +54,7 @@ class MovieListAdapter(val context: Context?, var items: List<Movie> = ArrayList
             holder.llMovieTextContainer.setBackgroundColor(color)
         }
 
+
         holder.cvMovieContainer.setOnClickListener {
             onItemClickListener?.onItemClick(movie, holder.ivMoviePoster)
         }

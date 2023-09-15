@@ -1,15 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.marcoscg.movies.common.widget.CustomSwipeRefreshLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.marcoscg.movies.common.widget.CustomSwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/srl_fragment_movie_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+        <RelativeLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="56dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Popular"
+                android:layout_centerInParent="true"
+                style="@style/TextAppearance.AppCompat.Title"/>
+            <ImageView
+                android:id="@+id/imvSearch"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:padding="6dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_baseline_search_24"/>
+        </RelativeLayout>
         <com.marcoscg.movies.common.widget.AutofitRecyclerView
             android:id="@+id/rv_fragment_movie_list"
             android:layout_width="match_parent"
@@ -20,7 +39,88 @@
             android:paddingLeft="@dimen/margin_minimum"
             android:paddingRight="@dimen/margin_minimum"
             android:paddingBottom="@dimen/margin_huge"
+            android:layout_below="@+id/header"
             tools:listitem="@layout/row_movie_list" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_login"
+            android:background="@color/white_primary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/vector_image"
+                android:layout_width="250dp"
+                android:layout_height="250dp"
+                android:layout_marginBottom="32dp"
+                android:src="@drawable/img_login_favorite"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/text_message_wrong_title"
+                style="@style/SemiBold.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:text="@string/log_in"
+                android:textColor="@color/brand_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/vector_image" />
+
+            <TextView
+                android:id="@+id/text_message_wrong"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/spacing_extra_large"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:text="@string/you_must_be_logged_in_to_use_list_features"
+                android:textAlignment="center"
+                android:textAppearance="@style/Regular.Medium.Secondary"
+                android:textColor="@color/shade_secondary_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_message_wrong_title" />
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_empty"
+            android:background="@color/white_primary"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/vector_image_empty"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginBottom="32dp"
+                android:src="@drawable/img_empy_movie"
+                android:layout_marginTop="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                style="@style/SemiBold.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/spacing_large"
+                android:text="Empty"
+                android:textColor="@color/brand_color"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/vector_image_empty" />
+
+
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ProgressBar
             android:id="@+id/pb_fragment_movie_list"

@@ -3,6 +3,7 @@ package com.marcoscg.movies.ui.home.viewmodel
 import androidx.lifecycle.ViewModel
 import com.marcoscg.movies.data.Resource
 import com.marcoscg.movies.domain.interactor.GetPopularMoviesUseCase
+import com.marcoscg.movies.domain.interactor.SearchMovieUseCase
 import com.marcoscg.movies.model.Movie
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -22,6 +23,22 @@ class PopularViewModel(private val getPopularMoviesUseCase: GetPopularMoviesUseC
         get() = stateFlow
 
     fun fetchPopularMovies() {
+        stateFlow.value = Resource.loading()
+
+        disposable = getPopularMoviesUseCase.execute(currentPage)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ res ->
+                lastPage = res.total_pages
+                stateFlow.value = Resource.success(res.results)
+            }, { throwable ->
+                lastPage = currentPage // prevent loading more pages
+                throwable.localizedMessage?.let {
+                    stateFlow.value = Resource.error(it)
+                }
+            })
+    }
+    fun searchPopularMovies() {
         stateFlow.value = Resource.loading()
 
         disposable = getPopularMoviesUseCase.execute(currentPage)

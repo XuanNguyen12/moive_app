@@ -1,12 +1,15 @@
 package com.marcoscg.movies.data.sources.remote.mapper
 
+import com.marcoscg.movies.data.sources.remote.model.RemoteCheckFavouriteResponse
 import com.marcoscg.movies.data.sources.remote.model.RemoteDataUserResponse
 import com.marcoscg.movies.data.sources.remote.model.RemoteDeleteFavouriteResponse
 import com.marcoscg.movies.data.sources.remote.model.RemoteFavouriteResponse
+import com.marcoscg.movies.data.sources.remote.model.RemoteGetCommentResponse
 import com.marcoscg.movies.data.sources.remote.model.RemoteLoginResponse
 import com.marcoscg.movies.data.sources.remote.model.RemoteMovie
 import com.marcoscg.movies.data.sources.remote.model.RemoteMovieDetail
 import com.marcoscg.movies.data.sources.remote.model.RemoteMoviesResponse
+import com.marcoscg.movies.data.sources.remote.model.RemotePostCommentResponse
 import com.marcoscg.movies.data.sources.remote.model.RemoteRegisterResponse
 import com.marcoscg.movies.model.*
 import com.marcoscg.movies.model.utils.orDefault
@@ -73,8 +76,8 @@ class MoviesRemoteMapper {
 
     fun mapRegisterFromRemote(remoteUserRegister: RemoteRegisterResponse): RegisterStatus {
         return RegisterStatus(
-            remoteUserRegister.title.orEmpty(),
-            remoteUserRegister.message.orEmpty()
+            remoteUserRegister.id.orEmpty(),
+            remoteUserRegister.email.orEmpty()
         )
     }
 
@@ -89,11 +92,13 @@ class MoviesRemoteMapper {
             remoteDataUserResponse.id
         )
     }
+
     fun mapFavouriteFromRemote(remoteFavouriteResponse: RemoteFavouriteResponse): FavouriteResponse {
         return FavouriteResponse(
             remoteFavouriteResponse.movieId
         )
     }
+
     fun mapFavouritesFromRemote(remoteMovies: List<RemoteMovie>): List<Movie> {
         return remoteMovies.map {
             Movie(
@@ -113,9 +118,44 @@ class MoviesRemoteMapper {
             )
         }
     }
+
     fun mapDeleteFavouritesFromRemote(emoteDeleteFavouriteResponse: RemoteDeleteFavouriteResponse): DeleteFavouriteResponse {
         return DeleteFavouriteResponse(
             emoteDeleteFavouriteResponse.message
+        )
+    }
+
+    fun mapCheckFavouriteFromRemote(remoteCheckFavouriteResponse: RemoteCheckFavouriteResponse): CheckFavouriteResponse {
+        return CheckFavouriteResponse(
+            remoteCheckFavouriteResponse.isFavorite
+        )
+    }
+
+    fun mapGetCommentFromRemote(remoteGetComment: List<RemoteGetCommentResponse>): List<GetCommentResponse> {
+        return remoteGetComment.map { remoteGetCommentResponse ->
+            GetCommentResponse(
+                remoteGetCommentResponse.Id,
+                UserId(
+                    remoteGetCommentResponse.userId?.Id,
+                    remoteGetCommentResponse.userId?.username
+                ),
+                remoteGetCommentResponse.movieId,
+                remoteGetCommentResponse.content,
+                remoteGetCommentResponse.createdAt,
+                remoteGetCommentResponse.updatedAt,
+                remoteGetCommentResponse.v
+            )
+        }
+
+    }
+
+    fun mapPostCommentFromRemote(remotePostCommentResponse: RemotePostCommentResponse): PostCommentResponse {
+        return PostCommentResponse(
+            remotePostCommentResponse.userId,
+            remotePostCommentResponse.movieId,
+            remotePostCommentResponse.content,
+            remotePostCommentResponse.Id,
+            remotePostCommentResponse.createdAt
         )
     }
 

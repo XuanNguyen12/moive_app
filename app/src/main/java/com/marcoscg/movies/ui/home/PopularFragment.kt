@@ -21,6 +21,7 @@ import com.marcoscg.movies.databinding.FragmentMovieListBinding
 import com.marcoscg.movies.model.Movie
 import com.marcoscg.movies.ui.home.master.MovieListAdapter
 import com.marcoscg.movies.ui.home.viewmodel.PopularViewModel
+import com.marcoscg.movies.ui.sign_in.SignInFragmentDirections
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.collect
 import org.koin.android.ext.android.inject
@@ -49,7 +50,10 @@ class PopularFragment : Fragment(R.layout.fragment_movie_list), MovieListAdapter
 
         setupRecyclerView()
         setupSwipeRefresh()
-
+        binding.imvSearch.setOnClickListener {
+            val action = PopularFragmentDirections.navigateToSearch()
+            findNavController().navigate(action)
+        }
         popularViewModel.refreshPopularMovies()
 
         viewLifecycleOwner.lifecycleScope.launch {

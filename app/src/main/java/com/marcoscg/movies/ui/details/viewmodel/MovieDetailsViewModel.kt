@@ -1,9 +1,9 @@
 package com.marcoscg.movies.ui.details.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.marcoscg.movies.data.Resource
 import com.marcoscg.movies.domain.interactor.*
+import com.marcoscg.movies.model.GetCommentResponse
 import com.marcoscg.movies.model.MovieDetail
 import com.marcoscg.movies.model.toSimple
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -16,11 +16,13 @@ class MovieDetailsViewModel(private val getSingleMovieUseCase: GetSingleMovieUse
                             private val addFavoriteMovieUseCase: AddFavoriteMovieUseCase,
                             private val deleteFavoriteMovieUseCase: DeleteFavoriteMovieUseCase,
                             private val updateFavoriteMovieUseCase: UpdateFavoriteMovieUseCase,
-                            private val getFavoriteMovieUseCase: GetFavoriteMovieUseCase
+                            private val getFavoriteMovieUseCase: CheckFavoriteMovieUseCase,
+                            private val getCommentMovieUseCase: GetCommentMovieUseCase,
 ) : ViewModel() {
 
     private val singleMovieStateFlow = MutableStateFlow<Resource<MovieDetail>>(Resource.empty())
     private val favoritesStateFlow = MutableStateFlow<Resource<Boolean>>(Resource.empty())
+    private val commentStateFlow = MutableStateFlow<Resource<List<GetCommentResponse>>>(Resource.empty())
     var disposable: Disposable? = null
 
     val singleMovieState: StateFlow<Resource<MovieDetail>>
@@ -28,6 +30,8 @@ class MovieDetailsViewModel(private val getSingleMovieUseCase: GetSingleMovieUse
 
     val favoritesState: StateFlow<Resource<Boolean>>
         get() = favoritesStateFlow
+    val commentMoviesState: StateFlow<Resource<List<GetCommentResponse>>>
+        get() = commentStateFlow
 
     fun fetchSingleMovie(id: String) {
         singleMovieStateFlow.value = Resource.loading()
@@ -44,7 +48,7 @@ class MovieDetailsViewModel(private val getSingleMovieUseCase: GetSingleMovieUse
             })
     }
 
-    fun addFavoriteMovie(movieId: String) {
+    private fun addFavoriteMovie(movieId: String) {
         favoritesStateFlow.value = Resource.loading()
         disposable = addFavoriteMovieUseCase.execute(movieId)
             .subscribeOn(Schedulers.io())
@@ -53,13 +57,12 @@ class MovieDetailsViewModel(private val getSingleMovieUseCase: GetSingleMovieUse
                 favoritesStateFlow.value = Resource.success(true)
             }, { throwable ->
                 throwable.localizedMessage?.let {
-                    Log.d("XuanNV", "addFavoriteMovie: " + it)
                     favoritesStateFlow.value = Resource.error(it)
                 }
             })
     }
 
-    fun deleteFavoriteMovie(movie: MovieDetail) {
+    private fun deleteFavoriteMovie(movie: MovieDetail) {
         favoritesStateFlow.value = Resource.loading()
 
         disposable = deleteFavoriteMovieUseCase.execute(movie.id.toString())
@@ -91,16 +94,17 @@ class MovieDetailsViewModel(private val getSingleMovieUseCase: GetSingleMovieUse
 
     fun toggleFavorite(movie: MovieDetail) {
         favoritesStateFlow.value = Resource.loading()
-        
         disposable = getFavoriteMovieUseCase.execute(movie.id)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                // favorite movie exists, remove from favorites
-                deleteFavoriteMovie(movie)
+                if (it.isFavourite == true) {
+                    deleteFavoriteMovie(movie)
+                } else {
+                    addFavoriteMovie(movie.id.toString())
+                }
             }, {
-                // favorite movie does not exist, add to favorites
-                addFavoriteMovie(movie.id.toString())
+                // favorite movie does not exist
             })
     }
 
@@ -112,12 +116,26 @@ class MovieDetailsViewModel(private val getSingleMovieUseCase: GetSingleMovieUse
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 // favorite movie exists, update data first
-                updateFavoriteMovie(movie)
-                favoritesStateFlow.value = Resource.success(true)
+                favoritesStateFlow.value = Resource.success(it.isFavourite)
             }, {
                 // favorite movie does not exist
-                favoritesStateFlow.value = Resource.success(false)
+                it.localizedMessage?.let {
+                    favoritesStateFlow.value = Resource.error(it)
+                }
             })
     }
 
+    fun getCommentMovies(movieId : String) {
+        commentStateFlow.value = Resource.loading()
+        disposable = getCommentMovieUseCase.execute(movieId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ res ->
+                commentStateFlow.value = Resource.success(res)
+            }, { throwable ->
+                throwable.localizedMessage?.let {
+                    commentStateFlow.value = Resource.error(it)
+                }
+            })
+    }
 }

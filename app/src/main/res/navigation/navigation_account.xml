@@ -24,6 +24,7 @@
     <fragment
         android:id="@+id/nav_sign_in"
         android:name="com.marcoscg.movies.ui.sign_in.SignInFragment"
+        android:label="Sign In"
         tools:layout="@layout/fragment_sign_in">
 
         <action
@@ -46,6 +47,7 @@
     <fragment
         android:id="@+id/nav_sign_up"
         android:name="com.marcoscg.movies.ui.sign_in.SignUpFragment"
+        android:label="Sign Up"
         tools:layout="@layout/fragment_sign_up">
 
         <action
