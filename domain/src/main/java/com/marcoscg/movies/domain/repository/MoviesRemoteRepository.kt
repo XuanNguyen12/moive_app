@@ -1,6 +1,7 @@
 package com.marcoscg.movies.domain.repository
 
 import com.marcoscg.movies.model.DataUserResponse
+import com.marcoscg.movies.model.DeleteFavouriteResponse
 import com.marcoscg.movies.model.FavouriteResponse
 import com.marcoscg.movies.model.LoginResponse
 import com.marcoscg.movies.model.Movie
@@ -21,7 +22,8 @@ interface MoviesRemoteRepository {
     fun registerUser(userRegister: UserRegister): Single<RegisterStatus>
     fun loginUser(userLogin: UserLogin): Single<LoginResponse>
     fun getDataUser() : Single<DataUserResponse>
-    fun setFavourite(id : String) : Single<FavouriteResponse>
+    fun addFavourite(id : String) : Single<FavouriteResponse>
+    fun deleteFavourite(id : String) : Single<DeleteFavouriteResponse>
     fun getFavourite() : Single<List<Movie>>
 
 }

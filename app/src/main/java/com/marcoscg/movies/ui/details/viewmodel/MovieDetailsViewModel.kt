@@ -1,5 +1,6 @@
 package com.marcoscg.movies.ui.details.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.marcoscg.movies.data.Resource
 import com.marcoscg.movies.domain.interactor.*
@@ -45,7 +46,6 @@ class MovieDetailsViewModel(private val getSingleMovieUseCase: GetSingleMovieUse
 
     fun addFavoriteMovie(movieId: String) {
         favoritesStateFlow.value = Resource.loading()
-
         disposable = addFavoriteMovieUseCase.execute(movieId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -53,6 +53,7 @@ class MovieDetailsViewModel(private val getSingleMovieUseCase: GetSingleMovieUse
                 favoritesStateFlow.value = Resource.success(true)
             }, { throwable ->
                 throwable.localizedMessage?.let {
+                    Log.d("XuanNV", "addFavoriteMovie: " + it)
                     favoritesStateFlow.value = Resource.error(it)
                 }
             })
@@ -61,7 +62,7 @@ class MovieDetailsViewModel(private val getSingleMovieUseCase: GetSingleMovieUse
     fun deleteFavoriteMovie(movie: MovieDetail) {
         favoritesStateFlow.value = Resource.loading()
 
-        disposable = deleteFavoriteMovieUseCase.execute(movie.toSimple())
+        disposable = deleteFavoriteMovieUseCase.execute(movie.id.toString())
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({

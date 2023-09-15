@@ -1,6 +1,7 @@
 package com.marcoscg.movies.data.sources.remote.mapper
 
 import com.marcoscg.movies.data.sources.remote.model.RemoteDataUserResponse
+import com.marcoscg.movies.data.sources.remote.model.RemoteDeleteFavouriteResponse
 import com.marcoscg.movies.data.sources.remote.model.RemoteFavouriteResponse
 import com.marcoscg.movies.data.sources.remote.model.RemoteLoginResponse
 import com.marcoscg.movies.data.sources.remote.model.RemoteMovie
@@ -111,6 +112,11 @@ class MoviesRemoteMapper {
                 it.release_date.orEmpty()
             )
         }
+    }
+    fun mapDeleteFavouritesFromRemote(emoteDeleteFavouriteResponse: RemoteDeleteFavouriteResponse): DeleteFavouriteResponse {
+        return DeleteFavouriteResponse(
+            emoteDeleteFavouriteResponse.message
+        )
     }
 
 }

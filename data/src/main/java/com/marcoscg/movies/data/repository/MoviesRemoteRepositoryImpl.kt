@@ -6,6 +6,7 @@ import com.marcoscg.movies.data.sources.remote.model.RemoteUserLogin
 import com.marcoscg.movies.data.sources.remote.model.RemoteUserRegister
 import com.marcoscg.movies.domain.repository.MoviesRemoteRepository
 import com.marcoscg.movies.model.DataUserResponse
+import com.marcoscg.movies.model.DeleteFavouriteResponse
 import com.marcoscg.movies.model.FavouriteResponse
 import com.marcoscg.movies.model.LoginResponse
 import com.marcoscg.movies.model.Movie
@@ -64,7 +65,7 @@ class MoviesRemoteRepositoryImpl(private val moviesRemoteMapper: MoviesRemoteMap
             }
     }
 
-    override fun setFavourite(id: String): Single<FavouriteResponse> {
+    override fun addFavourite(id: String): Single<FavouriteResponse> {
         return ApiClient.movieService()
             .setFavourite(id).map {
                 moviesRemoteMapper.mapFavouriteFromRemote(it)
@@ -74,6 +75,12 @@ class MoviesRemoteRepositoryImpl(private val moviesRemoteMapper: MoviesRemoteMap
     override fun getFavourite(): Single<List<Movie>> {
         return ApiClient.movieService().getFavourite().map {
             moviesRemoteMapper.mapFavouritesFromRemote(it)
+        }
+    }
+
+    override fun deleteFavourite(id: String): Single<DeleteFavouriteResponse> {
+        return ApiClient.movieService().deleteFavourite(id).map {
+            moviesRemoteMapper.mapDeleteFavouritesFromRemote(it)
         }
     }
 }
