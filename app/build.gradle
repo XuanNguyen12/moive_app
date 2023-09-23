@@ -9,7 +9,7 @@ android {
 
     compileSdkVersion globalConfiguration["compileSdkVersion"]
     defaultConfig {
-        applicationId "com.marcoscg.movies"
+        applicationId "com.kma.movies"
         minSdkVersion globalConfiguration["minSdkVersion"]
         targetSdkVersion globalConfiguration["targetSdkVersion"]
         versionCode 1

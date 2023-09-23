@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/nav_upcoming"
-        android:name="com.marcoscg.movies.ui.home.UpcomingFragment"
+        android:name="com.kma.movies.ui.home.UpcomingFragment"
         android:label="@string/upcoming_movies"
         tools:layout="@layout/fragment_movie_list">
 
@@ -20,7 +20,7 @@
 
     <activity
         android:id="@+id/nav_movie_detail"
-        android:name="com.marcoscg.movies.ui.details.MovieDetailsActivity">
+        android:name="com.kma.movies.ui.details.MovieDetailsActivity">
 
         <argument
             android:name="id"

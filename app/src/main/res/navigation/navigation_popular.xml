@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/nav_popular"
-        android:name="com.marcoscg.movies.ui.home.PopularFragment"
+        android:name="com.kma.movies.ui.home.PopularFragment"
         android:label="@string/popular_movies"
         tools:layout="@layout/fragment_movie_list">
 
@@ -22,7 +22,7 @@
 
     <activity
         android:id="@+id/nav_movie_detail"
-        android:name="com.marcoscg.movies.ui.details.MovieDetailsActivity">
+        android:name="com.kma.movies.ui.details.MovieDetailsActivity">
 
         <argument
             android:name="id"
@@ -36,7 +36,7 @@
     </activity>
     <fragment
         android:id="@+id/nav_search"
-        android:name="com.marcoscg.movies.ui.search.SearchMovieFragment"
+        android:name="com.kma.movies.ui.search.SearchMovieFragment"
         android:label="@string/movie_search"
         tools:layout="@layout/fragment_search_view">
 

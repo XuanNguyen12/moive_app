@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/nav_account"
-        android:name="com.marcoscg.movies.ui.home.AccountFragment"
+        android:name="com.kma.movies.ui.home.AccountFragment"
         android:label="@string/account_movies"
         tools:layout="@layout/fragment_account">
 
@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/nav_sign_in"
-        android:name="com.marcoscg.movies.ui.sign_in.SignInFragment"
+        android:name="com.kma.movies.ui.sign_in.SignInFragment"
         android:label="Sign In"
         tools:layout="@layout/fragment_sign_in">
 
@@ -40,13 +40,13 @@
 
     <fragment
         android:id="@+id/nav_logout"
-        android:name="com.marcoscg.movies.ui.sign_in.LogoutDialog"
+        android:name="com.kma.movies.ui.sign_in.LogoutDialog"
         tools:layout="@layout/dialog_logout">
     </fragment>
 
     <fragment
         android:id="@+id/nav_sign_up"
-        android:name="com.marcoscg.movies.ui.sign_in.SignUpFragment"
+        android:name="com.kma.movies.ui.sign_in.SignUpFragment"
         android:label="Sign Up"
         tools:layout="@layout/fragment_sign_up">
 
@@ -58,7 +58,7 @@
 
     <activity
         android:id="@+id/nav_movie_detail"
-        android:name="com.marcoscg.movies.ui.details.MovieDetailsActivity">
+        android:name="com.kma.movies.ui.details.MovieDetailsActivity">
 
         <argument
             android:name="id"

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.marcoscg.movies">
+    package="com.kma.movies">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:name=".MoviesApp"
+        android:name="com.kma.movies.MoviesApp"
         android:allowBackup="true"
         android:icon="@drawable/ic_background_logo"
         android:label="@string/app_name"
@@ -16,7 +16,7 @@
         tools:targetApi="n">
 
         <activity
-            android:name="com.marcoscg.movies.ui.splash.SplashActivity"
+            android:name="com.kma.movies.ui.splash.SplashActivity"
             android:theme="@style/AppTheme.Launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,14 +27,14 @@
         </activity>
 
         <activity
-            android:name=".ui.home.HomeActivity"
+            android:name="com.kma.movies.ui.home.HomeActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.details.CommentFragment"
+            android:name="com.kma.movies.ui.details.CommentFragment"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".ui.details.MovieDetailsActivity"
+            android:name="com.kma.movies.ui.details.MovieDetailsActivity"
             android:windowSoftInputMode="adjustResize" />
 
     </application>

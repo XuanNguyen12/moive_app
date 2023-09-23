@@ -47,7 +47,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
 
-                        <com.marcoscg.movies.common.widget.SquareImageView
+                        <com.kma.movies.common.widget.SquareImageView
                             android:id="@+id/iv_activity_movie_details"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
